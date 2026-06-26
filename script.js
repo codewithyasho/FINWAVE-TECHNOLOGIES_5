@@ -418,3 +418,68 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('%cBuilt with ❤️ for Future-Ready Businesses', 'color: #0A2472; font-size: 12px;');
 
 });
+
+const chatBtn = document.getElementById("chatbot-btn");
+const chatContainer = document.getElementById("chatbot-container");
+const closeChat = document.getElementById("close-chat");
+const sendBtn = document.getElementById("send-btn");
+const userInput = document.getElementById("user-input");
+const chatBody = document.getElementById("chat-body");
+
+
+chatBtn.addEventListener("click", () => {
+    chatContainer.classList.toggle("hidden");
+    // Hide red dot once user opens the chat
+    const redDot = document.getElementById("chatbot-red-dot");
+    if (redDot) redDot.classList.add("dot-hidden");
+  });
+  
+  closeChat.addEventListener("click", () => {
+    chatContainer.classList.add("hidden");
+  });
+
+sendBtn.onclick = sendMessage;
+userInput.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") sendMessage();
+});
+
+function sendMessage() {
+  const text = userInput.value.trim();
+  if (!text) return;
+
+  addMessage(text, "user");
+  userInput.value = "";
+
+  callAPI(text);
+}
+
+function addMessage(text, sender) {
+  const msg = document.createElement("div");
+  msg.classList.add("message", sender);
+  msg.innerText = text;
+  chatBody.appendChild(msg);
+
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+async function callAPI(userMessage) {
+  try {
+    const response = await fetch("https://yashodeep2006-finewavetech-api.hf.space/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: userMessage,
+      }),
+    });
+
+    const data = await response.json();
+
+    addMessage(data.answer || "Sorry for inconvenience, server is currently down, kindly contact to connect@smiragroup.in", "bot");
+
+  } catch (error) {
+    addMessage("Sorry for inconvenience, server is currently down, kindly contact to connect@smiragroup.in", "bot");
+    console.error(error);
+  }
+}
