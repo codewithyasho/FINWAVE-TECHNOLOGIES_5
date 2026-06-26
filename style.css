@@ -4252,20 +4252,6 @@ button {
   color:black;
 }
 
-:root {
-  --bg: #0b0f19;
-  --card: rgba(17, 22, 35, 0.92);
-  --border: rgba(255, 255, 255, 0.08);
-  --text: #f5f5f5;
-  --muted: #b9b9c3;
-  --accent: #ff8c24;
-  --accent-dark: #ff6a00;
-  --bot-msg: #f3f3f3;
-  --user-msg: linear-gradient(135deg, #ff9d2f, #ff6a00);
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-  --blur: blur(18px);
-}
-
 #chatbot-btn {
   position: fixed;
   bottom: 200px;
